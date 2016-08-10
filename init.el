@@ -44,7 +44,7 @@ values."
      ;; version-control
      ;; languages
      c-c++
-     csharp
+     ;; csharp
      emacs-lisp
      fsharp
      html
