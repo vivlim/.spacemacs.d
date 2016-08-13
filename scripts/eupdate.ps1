@@ -21,19 +21,6 @@ function Expand-Zip($file, $destination)
     }
 }
 
-function Msys2-Install-Package-If-File-Missing($package, $file)
-{
-    if (Test-Path "c:\msys64\usr\bin\$file")
-    {
-        echo "msys2 has $package installed"
-    }
-    else
-    {
-        echo "msys2 doesn't have $package installed, installing package using pacman."
-        C:\msys64\usr\bin\bash.exe --login -c "pacman -S --noconfirm $package"
-    }
-}
-
 if (!$env:HOME) # emacs looks here to pull in the spacemacs config.
 {
     echo "Setting HOME environment variable to $env:USERPROFILE"
@@ -43,39 +30,6 @@ else
 {
     echo "HOME environment variable already exists and is $env:HOME"
 }
-
-if (Test-Path c:\msys64)
-{
-    echo "This machine has msys2 installed in c:\msys64"
-}
-else
-{
-    echo "This machine doesn't have msys2 installed in c:\msys64, getting the installer"
-    wget http://repo.msys2.org/distrib/x86_64/msys2-x86_64-20160205.exe -outfile $env:temp\msys2.exe
-    Start-Process -FilePath "$env:temp\msys2.exe"
-}
-
-if (Test-Path c:\msys64)
-{
-    echo "Since msys2 is installed, making sure it has all the packages needed."
-    Msys2-Install-Package-If-File-Missing "cscope" "cscope.exe";
-    Msys2-Install-Package-If-File-Missing "openssh" "ssh.exe";
-    Msys2-Install-Package-If-File-Missing "dos2unix" "dos2unix.exe";
-    Msys2-Install-Package-If-File-Missing "git" "git.exe";
-
-    if (!(Test-Path c:\msys64\etc\nsswitch.conf.bak))
-    {
-        echo "Patching mysys2/etc/nsswitch.conf so ssh can use profile/.ssh"
-        Copy-Item c:\msys64\etc\nsswitch.conf c:\msys64\etc\nsswitch.conf.bak
-        Get-Content c:\msys64\etc\nsswitch.conf.bak | Foreach-Object {$_ -replace '^db_home.*$', "db_home: windows cygwin desc"} | Out-File c:\msys64\etc\nsswitch.conf
-        C:\msys64\usr\bin\dos2unix.exe c:\msys64\etc\nsswitch.conf
-    }
-}
-else
-{
-    echo "Not doing anything with msys2 packages since it doesn't appear to be installed at this time."
-}
-
 
 if (Get-Command "git.exe" -ErrorAction SilentlyContinue)
 {
@@ -135,19 +89,6 @@ else
     Exit
 }
 
-# check that emacs is on this pc
-if (Test-Path c:\emacs)
-{
-    #ok
-    echo "This machine has emacs installed."
-}
-else
-{
-    echo "This machine doesn't have emacs installed; getting it & installing to c:\emacs"
-    wget http://d.mjlim.net/~mikel/emacs.zip -outfile $env:temp\emacs.zip
-    Expand-Zip $env:temp\emacs.zip c:\
-}
-
 # check regkey to turn off scaling
 $layerspath = "hklm:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers\"
 # create it if it doesn't exist.
@@ -192,17 +133,6 @@ else
     [Environment]::SetEnvironmentVariable("Path", $Env:Path + ";" + $env:USERPROFILE + "\bin\", "Machine")
 }
 
-if (Test-Path $env:USERPROFILE\bin\pt.exe -ErrorAction SilentlyContinue)
-{
-    echo "This machine has pt.exe in the path"
-}
-else
-{
-    echo "This machine doesn't have pt.exe, getting it."
-    wget https://github.com/monochromegane/the_platinum_searcher/releases/download/v2.1.1/pt_windows_amd64.zip -outfile $env:temp\pt.zip
-    Expand-Zip $env:temp\pt.zip $env:USERPROFILE\bin\
-}
-
 # fix emacs.d/server identity for the hell of it (could be broken on some machines)
 $serverpath = "$env:USERPROFILE/.emacs.d/server"
 if (Test-Path $serverpath)
@@ -215,15 +145,6 @@ if (Test-Path $serverpath)
 
 echo "Refreshing PATH"
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-
-
-# finally start emacs to update packages.
-# if (Test-path $env:USERPROFILE/.spacemacs.d/scripts/e.bat)
-# {
-#     # load runemacs.exe since for some reason that makes windows start honoring the dpi flag regkeys???
-#     Start-Process -FilePath "c:\emacs\bin\runemacs.exe"
-#     # & $env:USERPROFILE/.spacemacs.d/scripts/e.bat
-# }
 
 if (!$dontRunAgain)
 {
