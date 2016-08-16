@@ -50,15 +50,14 @@ function Update-Chocolatey-Packages()
     echo "Setting up hs"
     choco upgrade -y heatseeker
     if (!(Get-Command "Install-Package")){
+        echo "Install-Package not found. Installing package management."
         choco upgrade -y powershell-packagemanagement
+        refreshenv
     }
 
-    if ((Get-Command "PSReadline" -ErrorAction SilentlyContinue)){
-        # todo; setup from here https://github.com/rschmitt/heatseeker
-    }
-    else
-    {
-        echo "PSReadline not found. todo: Figure out what to do in this case."
+    if (!(Get-Command "PSReadline" -ErrorAction SilentlyContinue)){
+        echo "PSReadline not found. Trying to install it."
+        Install-Package PSReadline
     }
 }
 
@@ -163,13 +162,14 @@ if(!(Test-Path $layerspath))
 
 $layers = Get-Item $layerspath
 
-if ($layers.GetValueNames().Contains("c:\programdata\chocolatey\bin\emacs.exe"))
+if ($layers.GetValueNames().Contains("c:\programdata\chocolatey\lib\emacs64\tools\emacs\bin\emacs.exe"))
 {
     echo "This machine has the highdpi aware registry flags set on the emacs exes."
 }
 else
 {
     echo "This machine doesn't have the highdpi aware registry flags set on the emacs exes, setting them..."
+    $layers | New-ItemProperty -name "c:\programdata\chocolatey\lib\emacs64\tools\emacs\bin\emacs.exe" -value "~ HIGHDPIAWARE"
     $layers | New-ItemProperty -name "c:\programdata\chocolatey\bin\emacs.exe" -value "~ HIGHDPIAWARE"
     $layers | New-ItemProperty -name "c:\programdata\chocolatey\bin\runemacs.exe" -value "~ HIGHDPIAWARE"
     echo "if that failed, try again as admin."
