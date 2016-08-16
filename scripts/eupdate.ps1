@@ -53,8 +53,26 @@ function Update-Chocolatey-Packages()
         choco upgrade -y powershell-packagemanagement
     }
 
-    if (!(Get-Command "PSReadline" -ErrorAction SilentlyContinue)){
+    if ((Get-Command "PSReadline" -ErrorAction SilentlyContinue)){
         # todo; setup from here https://github.com/rschmitt/heatseeker
+    }
+    else
+    {
+        echo "PSReadline not found. todo: Figure out what to do in this case."
+    }
+}
+
+function AddPsProfile()
+{
+    if (!(Get-Content $profile | Select-String "spacemacs" -Quiet))
+    {
+        echo "Powershell profile doesn't call my profile script, adding to $profile and running it"
+        Add-Content $profile ". $home\.spacemacs.d\scripts\psprofile.ps1"
+        . $home\.spacemacs.d\scripts\psprofile.ps1
+    }
+    else
+    {
+        echo "Powershell profile calls my profile script."
     }
 }
 
@@ -63,6 +81,8 @@ if (!$dontRunAgain -and $choco)
 {
     Update-Chocolatey-Packages
 }
+
+AddPsProfile
 
 if (!$env:HOME) # emacs looks here to pull in the spacemacs config.
 {
