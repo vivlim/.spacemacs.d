@@ -1,7 +1,8 @@
 #Requires -RunAsAdministrator
 
 param (
-    [switch] $dontRunAgain
+    [switch] $dontRunAgain,
+    [switch] $choco
 )
 
 function Expand-Zip($file, $destination)
@@ -19,6 +20,48 @@ function Expand-Zip($file, $destination)
             $shell.NameSpace($destination).copyhere($item)
         }
     }
+}
+
+function Update-Chocolatey-Packages()
+{
+    if (!(Get-Command "choco.exe" -ErrorAction SilentlyContinue))
+    {
+        echo "Installing Chocolatey"
+        iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+        refreshenv
+    }
+
+    echo "Installing/Updating Chocolatey packages"
+    choco upgrade pt -y
+    choco upgrade emacs64 -y
+    choco upgrade git -y -params '"/GitAndUnixToolsOnPath"'
+    choco upgrade -y everything
+    choco upgrade -y nodejs
+    choco upgrade -y gitextensions
+    choco upgrade -y kdiff3
+    choco upgrade -y 7zip
+    choco upgrade -y git-credential-manager-for-windows
+    choco upgrade -y windirstat
+    choco upgrade -y win32-openssh -params '"/SSHServerFeature"'
+    choco upgrade -y sysinternals
+    choco upgrade -y vim
+    choco upgrade -y ctags
+
+    echo "Setting up hs"
+    choco upgrade -y heatseeker
+    if (!(Get-Command "Install-Package")){
+        choco upgrade -y powershell-packagemanagement
+    }
+
+    if (!(Get-Command "PSReadline" -ErrorAction SilentlyContinue)){
+        # todo; setup from here https://github.com/rschmitt/heatseeker
+    }
+}
+
+# Update choco packages on initial run
+if (!$dontRunAgain -and $choco)
+{
+    Update-Chocolatey-Packages
 }
 
 if (!$env:HOME) # emacs looks here to pull in the spacemacs config.
@@ -84,7 +127,7 @@ else
     }
     else
     {
-        echo "Install git from somewhere & make sure it's in the path."
+        echo "Please rerun with -choco flag to install git (and other things)"
     }
     Exit
 }
@@ -100,15 +143,15 @@ if(!(Test-Path $layerspath))
 
 $layers = Get-Item $layerspath
 
-if ($layers.GetValueNames().Contains("c:\emacs\bin\emacs.exe"))
+if ($layers.GetValueNames().Contains("c:\programdata\chocolatey\bin\emacs.exe"))
 {
     echo "This machine has the highdpi aware registry flags set on the emacs exes."
 }
 else
 {
     echo "This machine doesn't have the highdpi aware registry flags set on the emacs exes, setting them..."
-    $layers | New-ItemProperty -name "c:\emacs\bin\emacs.exe" -value "~ HIGHDPIAWARE"
-    $layers | New-ItemProperty -name "c:\emacs\bin\runemacs.exe" -value "~ HIGHDPIAWARE"
+    $layers | New-ItemProperty -name "c:\programdata\chocolatey\bin\emacs.exe" -value "~ HIGHDPIAWARE"
+    $layers | New-ItemProperty -name "c:\programdata\chocolatey\bin\runemacs.exe" -value "~ HIGHDPIAWARE"
     echo "if that failed, try again as admin."
 }
 
@@ -150,4 +193,8 @@ if (!$dontRunAgain)
 {
     echo "~*~*~ Running again ~*~*~"
     Invoke-Expression "eupdate.ps1 -dontRunAgain"
+}
+else
+{
+    echo "Remember to use -choco if you want packages to update!"
 }
