@@ -46,6 +46,7 @@ function Update-Chocolatey-Packages()
     choco upgrade -y sysinternals
     choco upgrade -y vim
     choco upgrade -y ctags
+    choco upgrade -y sudo
 
     echo "Setting up hs"
     choco upgrade -y heatseeker
