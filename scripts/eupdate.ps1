@@ -2,7 +2,8 @@
 
 param (
     [switch] $dontRunAgain,
-    [switch] $choco
+    [switch] $choco,
+    [switch] $vim
 )
 
 function Expand-Zip($file, $destination)
@@ -62,6 +63,13 @@ function Update-Chocolatey-Packages()
     }
 }
 
+function Update-Vim-Plugins()
+{
+    git submodule init
+    git submodule update
+    vim +PluginInstall +qall
+}
+
 function AddPsProfile()
 {
     if (!(Get-Content $profile | Select-String "spacemacs" -Quiet))
@@ -80,6 +88,36 @@ function AddPsProfile()
 if (!$dontRunAgain -and $choco)
 {
     Update-Chocolatey-Packages
+}
+
+if ($vim)
+{
+    echo "Setting up vim config."
+
+    if (Test-path $env:USERPROFILE/vimfiles/)
+    {
+        echo "vimfiles exists. updating it..."
+        pushd $env:USERPROFILE/vimfiles
+        git pull origin master
+
+        Update-Vim-Plugins
+
+        popd
+    }
+    else
+    {
+        echo "vimfiles doesn't exist. cloning from my github"
+        pushd $env:USERPROFILE
+        git clone git@github.com:mjlim/vimfiles.git
+        if (!(Test-path $env:USERPROFILE/vimfiles/))
+        {
+            echo "cloning failed. falling back to https clone"
+            git clone https://github.com/mjlim/vimfiles.git
+        }
+        Update-Vim-Plugins
+
+        popd
+    }
 }
 
 AddPsProfile
