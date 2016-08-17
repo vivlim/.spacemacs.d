@@ -38,9 +38,9 @@ values."
      shell-default-position 'bottom)
      ;; spell-checking
      windows-scripts
-     syntax-checking
-     games
-     semantic
+     ;;syntax-checking
+     ;;games
+     ;;semantic
      ;; version-control
      ;; languages
      c-c++
@@ -48,7 +48,7 @@ values."
      emacs-lisp
      fsharp
      html
-     java
+     ;;java
      javascript
      markdown
      python
