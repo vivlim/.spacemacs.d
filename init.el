@@ -353,14 +353,14 @@ you should place you code here."
   ;; set text size according to screen resolution
   (if (>= (nth 3(car(car(display-monitor-attributes-list)))) '3000)
       ;; 3840 pixels wide; this is my 4k monitor and I need a larger font
-      '("Consolas"
+      '("Source Code Pro"
         :size 19
         :weight normal
         :width normal
         :powerline-scale 1.1)
 
       ;; default to this
-      '("Consolas"
+      '("Source Code Pro"
         :size 12
         :weight normal
         :width normal
