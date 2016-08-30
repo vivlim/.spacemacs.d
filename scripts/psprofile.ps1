@@ -1,4 +1,13 @@
 if ($host.Name -eq "ConsoleHost"){
+
+$machineSetupProfile = "~\machinesetup\psprofile.ps1"
+if (Test-Path $machineSetupProfile)
+{
+    Write-Host "WARNING: $profile still points to .spacemacs.d version of psprofile. Redirecting to machinesetup version..." -ForegroundColor Yellow
+    . $machineSetupProfile
+}
+else
+{
     $ps = $null
     try {
         # On Windows 10, PSReadLine ships with PowerShell
@@ -24,4 +33,6 @@ if ($host.Name -eq "ConsoleHost"){
       }
 
     echo "Profile loaded."
+}
+
 }
