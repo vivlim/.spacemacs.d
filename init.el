@@ -283,6 +283,7 @@ you should place you code here."
 
     (setq c-default-style "office-c++")
     (setq-default evil-escape-key-sequence "jk")
+    (setq-default evil-escape-delay 1)
     (setq projectile-indexing-method 'alien)
 
     ;; windows only environment stuff
