@@ -289,16 +289,6 @@ you should place you code here."
     (setq-default evil-escape-delay 0.2)
     (setq projectile-indexing-method 'alien)
 
-    ;; windows only environment stuff
-    (if (eq system-type 'windows-nt)
-        (progn
-            (setenv "PATH"
-                (concat
-                "C:\\msys64\\usr\\bin;"
-                (getenv "PATH")))
-
-            (setq exec-path (append exec-path '("c:\\msys64\\usr\\bin")))))
-
     (setq themes-megapack-packages '(zenburn))
 
     (global-company-mode)
