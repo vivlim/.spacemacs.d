@@ -262,6 +262,9 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
+
+   ;; don't check for updates at boot
+   dotspacemacs-check-for-update nil
    ))
 
 (defun dotspacemacs/user-init ()
@@ -283,7 +286,7 @@ you should place you code here."
 
     (setq c-default-style "office-c++")
     (setq-default evil-escape-key-sequence "jk")
-    (setq-default evil-escape-delay 1)
+    (setq-default evil-escape-delay 0.2)
     (setq projectile-indexing-method 'alien)
 
     ;; windows only environment stuff
