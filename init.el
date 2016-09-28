@@ -287,6 +287,9 @@ you should place you code here."
     (setq c-default-style "office-c++")
     (setq-default evil-escape-key-sequence "jk")
     (setq-default evil-escape-delay 0.2)
+    (push 'visual evil-escape-excluded-states)
+
+
     (setq projectile-indexing-method 'alien)
 
     (setq themes-megapack-packages '(zenburn))
