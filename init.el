@@ -81,6 +81,7 @@ values."
   (setq-default my-extra-configuration-layers-available (delq nil (mapcar (lambda (x) (my/layer-if-known x)) my-extra-configuration-layers)))
   (setq-default dotspacemacs-configuration-layers (append dotspacemacs-configuration-layers my-extra-configuration-layers-available))
 
+  (setq-default persp-auto-save-opt 0)
   ))
 
 (defun dotspacemacs/init ()
@@ -131,6 +132,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         sanityinc-tomorrow-night
                          spacemacs-dark
                          monokai
                          spacemacs-light
@@ -294,6 +296,7 @@ you should place you code here."
     (setq projectile-indexing-method 'alien)
 
     (setq themes-megapack-packages '(zenburn))
+    (setq themes-megapack-packages '(zenburn sanityinc-tomorrow-night))
 
     (global-company-mode)
 
