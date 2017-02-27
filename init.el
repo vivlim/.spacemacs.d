@@ -50,6 +50,8 @@ values."
      html
      ;;java
      javascript
+     typescript
+     react
      markdown
      python
      shell-scripts
@@ -282,6 +284,10 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
+  ;; fix on win10 as per http://emacs.stackexchange.com/questions/31056/magit-emacs-windows-7-alert-dialogs-on-first-use
+  (if (eq system-type 'windows-nt)
+      (setq with-editor-emacsclient-executable nil))
   )
 
 (defun dotspacemacs/user-config ()
@@ -361,6 +367,7 @@ you should place you code here."
           ))
 
     (add-hook 'prog-mode-hook '(lambda () (dtrt-indent-mode t)))
+
 )
 
 (defun my/dynamicfont ()
@@ -418,7 +425,7 @@ you should place you code here."
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
    (quote
-    (evil-snipe zenburn-theme insert-shebang hide-comnt stickyfunc-enhance srefactor omnisharp csharp-mode evil-cleverparens paredit xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe use-package tagedit spacemacs-theme spaceline smooth-scrolling smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-yapf powershell popwin pip-requirements persp-mode pcre2el paradox page-break-lines orgit open-junk-file neotree multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative leuven-theme less-css-mode json-mode js2-refactor js-doc jade-mode info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gmail-message-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger gh-md fsharp-mode flx-ido fish-mode fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elisp-slime-nav edit-server dtrt-indent disaster define-word cython-mode company-web company-tern company-statistics company-emoji company-c-headers company-anaconda coffee-mode cmake-mode clean-aindent-mode clang-format buffer-move bracketed-paste auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (evil-unimpaired tide typescript-mode yapfify powerline pug-mode spinner org org-plus-contrib live-py-mode link-hint hydra projectile git-link company-quickhelp eyebrowse eshell-z dumb-jump bind-key anaconda-mode tern company iedit smartparens bind-map highlight markdown-mode yasnippet request helm helm-core skewer-mode js2-mode magit magit-popup git-commit with-editor async auto-complete flycheck dash evil-snipe zenburn-theme insert-shebang hide-comnt stickyfunc-enhance srefactor omnisharp csharp-mode evil-cleverparens paredit xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe use-package tagedit spacemacs-theme spaceline smooth-scrolling smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-yapf powershell popwin pip-requirements persp-mode pcre2el paradox page-break-lines orgit open-junk-file neotree multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative leuven-theme less-css-mode json-mode js2-refactor js-doc jade-mode info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gmail-message-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger gh-md fsharp-mode flx-ido fish-mode fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elisp-slime-nav edit-server dtrt-indent disaster define-word cython-mode company-web company-tern company-statistics company-emoji company-c-headers company-anaconda coffee-mode cmake-mode clean-aindent-mode clang-format buffer-move bracketed-paste auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
  '(vc-annotate-background nil)
