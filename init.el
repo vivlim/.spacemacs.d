@@ -64,7 +64,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(bug-hunter)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -256,7 +256,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Comic Code"
                                :size 10.0
                                :weight normal
                                :width normal)
@@ -360,7 +360,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default t) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' to obtain fullscreen
@@ -400,7 +400,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Show the scroll bar while scrolling. The auto hide time can be configured
    ;; by setting this variable to a number. (default t)
-   dotspacemacs-scroll-bar-while-scrolling t
+   dotspacemacs-scroll-bar-while-scrolling nil ;; flickers badly on windows and i don't care for it generally
 
    ;; Control line numbers activation.
    ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
@@ -420,7 +420,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -485,7 +485,7 @@ It should only modify the values of Spacemacs settings."
    ;; performance issues, instead of calculating the frame title by
    ;; `spacemacs/title-prepare' all the time.
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "spacemacs %I@%S"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -572,6 +572,7 @@ before packages are loaded."
 
   ;; jk time babeyjk aaa
   (setq-default evil-escape-key-sequence "jk")
+  (setq garbage-collection-messages t)
 )
 
 
@@ -589,7 +590,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/notes/"))
  '(package-selected-packages
-   '(ac-ispell auto-complete auto-yasnippet evil-org fuzzy git-link git-messenger git-modes git-timemachine gitignore-templates gnuplot helm-c-yasnippet helm-company helm-git-grep helm-ls-git helm-org-rifle htmlize mwim org-cliplink org-contrib org-download org-mime org-pomodoro alert log4e gntp org-present org-projectile org-category-capture org-rich-yank orgit-forge orgit forge yaml ghub closql emacsql-sqlite emacsql treepy smeargle treemacs-magit magit magit-section git-commit with-editor transient unfill yasnippet-snippets yasnippet company-emoji company emoji-cheat-sheet-plus gh-md markdown-toc markdown-mode mmm-mode valign vmd-mode ws-butler writeroom-mode winum which-key volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org term-cursor symon symbol-overlay string-inflection string-edit-at-point spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline-all-the-icons space-doc restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-line macrostep lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+   '(bug-hunter ac-ispell auto-complete auto-yasnippet evil-org fuzzy git-link git-messenger git-modes git-timemachine gitignore-templates gnuplot helm-c-yasnippet helm-company helm-git-grep helm-ls-git helm-org-rifle htmlize mwim org-cliplink org-contrib org-download org-mime org-pomodoro alert log4e gntp org-present org-projectile org-category-capture org-rich-yank orgit-forge orgit forge yaml ghub closql emacsql-sqlite emacsql treepy smeargle treemacs-magit magit magit-section git-commit with-editor transient unfill yasnippet-snippets yasnippet company-emoji company emoji-cheat-sheet-plus gh-md markdown-toc markdown-mode mmm-mode valign vmd-mode ws-butler writeroom-mode winum which-key volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org term-cursor symon symbol-overlay string-inflection string-edit-at-point spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline-all-the-icons space-doc restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-line macrostep lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
