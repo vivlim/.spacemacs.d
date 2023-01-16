@@ -594,6 +594,8 @@ before packages are loaded."
   ;;(setq garbage-collection-messages t)
 
   (define-key evil-normal-state-map (kbd ", i v") #'org-download-clipboard)
+  ;; escape key -> C-g
+  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 )
 
 
