@@ -52,7 +52,8 @@ This function should only modify configuration layer settings."
      ;; lsp
      markdown
      multiple-cursors
-     org
+     (org :variables
+          org-enable-org-journal-support t)
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -601,6 +602,8 @@ before packages are loaded."
   (define-key evil-normal-state-map (kbd ", i v") #'org-download-clipboard)
   ;; escape key -> C-g
   (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
+  (setq org-journal-dir "~/org/journal/")
 )
 
 
