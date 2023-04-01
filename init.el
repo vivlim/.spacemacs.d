@@ -47,6 +47,7 @@ This function should only modify configuration layer settings."
      better-defaults
      emacs-lisp
      git
+     ;;(git :variables git-enable-magit-todos-plugin t)
      helm
      ;; lsp
      markdown
@@ -71,6 +72,8 @@ This function should only modify configuration layer settings."
 
      pdf
      epub
+
+
 
      treemacs)
 
@@ -595,9 +598,13 @@ before packages are loaded."
 
   ;; jk time babeyjk aaa
   (setq-default evil-escape-key-sequence "jk")
+  ;; don't jk in treemacs or visual mode
+  (setq evil-escape-excluded-major-modes '(dired-mode treemacs-mode evil-visual-state magit-status)) 
   ;;(setq garbage-collection-messages t)
 
   (define-key evil-normal-state-map (kbd ", i v") #'org-download-clipboard)
+  ;; escape key -> C-g
+  (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 )
 
 
